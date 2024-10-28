@@ -14,6 +14,8 @@ class BigClass:
         self.name = name
         self.__word1 = 'asdasd'
         self.__word2 = 'asdasd'
+        self.test_list = [1, 2, 3, 4]
+        self.value = 0
 
     # Вызывает при удаление сборщиком мусора данного класса
     # Лучше не использовать, потому что неизвестно, когда сборщик до него доберётся
@@ -52,7 +54,7 @@ class BigClass:
 
     # property
     # Два варианта использованя: 1 через перечисление, второй через декораторы(на самом деле оба через декораторы)
-    #1
+    # 1
     @property
     def word(self):
         return self.__word1
@@ -68,7 +70,7 @@ class BigClass:
     # Третий вариант дескриптор
     # В начале основного класса прописывается, что переменная является таким-то классом name = StringValue()
 
-    #class StringValue:
+    # class StringValue:
     #    def __init__(self, min_length=2, max_length=50):
     #        self.min_length = min_length
     #        self.max_length = max_length
@@ -83,7 +85,6 @@ class BigClass:
 
     #    def __get__(self, instance, owner):
     #        return instance.__dict__[self.name]
-
 
     def __getattribute__(self, item):
         # метод вызывается при обращение к атрибуту класса pt.name
@@ -122,7 +123,6 @@ class BigClass:
         # Логика поведения при вызове функции abs для объекта класса
         return abs(len(self.name))
 
-
     # математические методы, у всегх есть вариант с i или r в начале, определяющий с какой стороны находится основной объект
     def __add__(self, other):
         # логика сложения
@@ -131,7 +131,6 @@ class BigClass:
     def __sub__(self, other):
         # логика сложения
         return len(self.name) - other
-
 
     def __mul__(self, other):
         # Логика умножения
@@ -148,7 +147,6 @@ class BigClass:
     def __mod__(self, other):
         # Логика остатка от деления
         return len(self.name) % other
-
 
     # Операторы сравнения, если ne не определён, то вызывается eq и определяется not
     def __eq__(self, other):
@@ -180,5 +178,33 @@ class BigClass:
         # возвращает хеш класса
         return hash(self.name)
 
+    def __bool__(self):
+        # прописывается что возвразает объект класса, если вызывается функция bool()
+        return self.name
+
+    def __getitem__(self, item):
+        # Получение элемента экземпляра класса по индексу st[0] и т.д.
+        # Перед желательно прописать условия проверки
+        return self.test_list[item]
+
+    def __setitem__(self, key, value):
+        # изменение элемента экземпляра класса по индексу st[0] и т.д.
+        # Перед желательно прописать условия проверки
+        if len(self.test_list) > key:
+            self.test_list[key] = value
+
+    def __delitem__(self, key):
+        # удаляет по индексу - del stp[0]
+        del self.test_list[key]
 
 
+
+    # Итерации
+    def __iter__(self):
+        #Логика итератора
+        pass
+
+
+    def __next__(self):
+        # Тут прописывается логика получения следующего эелемента
+        pass
